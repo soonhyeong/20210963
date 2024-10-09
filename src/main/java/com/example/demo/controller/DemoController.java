@@ -30,8 +30,10 @@ public class DemoController {
         model.addAttribute("para2", 002);
         return "thymeleaf_test1";
     }
+    
     @Autowired
     private TestService testService;
+    
     @GetMapping("/testdb")
     public String getALLTestDBs(Model model) {
         TestDB test = testService.findByName("홍길동");
