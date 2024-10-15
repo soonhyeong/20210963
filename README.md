@@ -5,3 +5,7 @@ https://github.com/soonhyeong/20210963/tree/main
 2주차 [helllo.html : 실행/수정 완료] (문제 포함)
 
 3주차 포트폴리오 작성하기 완료 (문제 포함)
+
+4주차 DB연동 완료
+
+5주차 블로그 페이지 실행 완료

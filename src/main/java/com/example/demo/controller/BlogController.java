@@ -8,6 +8,11 @@ import com.example.demo.model.domain.Article;
 import com.example.demo.model.domain.TestDB;
 import com.example.demo.model.service.BlogService;
 import com.example.demo.model.service.TestService;
+import com.example.demo.model.service.AddArticleRequest;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+
+
 import java.util.List;
 
 @Controller
@@ -32,5 +37,11 @@ public class BlogController {
         model.addAttribute("data4", test);
         System.out.println("데이터 출력 디버그 : " + test);
         return "testdb";
+    }
+
+    @PostMapping("/aricles")
+    public String addArticle(@ModelAttribute AddArticleRequest request) {
+        blogService.save(request);
+        return "redirect:/article_list";
     }
 }
