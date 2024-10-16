@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import com.example.demo.model.domain.TestDB;
 import com.example.demo.model.service.TestService;
 
-
 @Controller // 컨트롤러 어노테이션 명시
 public class DemoController {
     @GetMapping("/hello") // 전송 방식 GET

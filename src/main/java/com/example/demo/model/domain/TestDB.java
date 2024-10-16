@@ -13,5 +13,5 @@ public class TestDB {
     private Long id;
 
     @Column(nullable = true) // 테이블의 컬럼 설정 값을 명시
-    private String name;
+    private String name; 
 }
