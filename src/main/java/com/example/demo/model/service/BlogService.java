@@ -3,6 +3,8 @@ package com.example.demo.model.service;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.stereotype.Service;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import com.example.demo.model.domain.Article;
 import com.example.demo.model.domain.Board;
 import com.example.demo.model.repository.BlogRepository;
@@ -63,10 +65,18 @@ public class BlogService {
     public void update(Long id, AddBoardRequest request) {
         Optional<Board> optionalBoard = blogRepository.findById(id); // 단일 글 조회
         optionalBoard.ifPresent(board -> { // 값이 같으면
-            board.update(request.getTitle(), request.getContent()); // 값을 수정
+            board.update(request.getTitle(), request.getContent(), request.getUser(), request.getNewdate(), request.getCount(), request.getLikec()); // 값을 수정
             blogRepository.save(board); // Article 객체에 저장
         });
     }
+
+    public Page<Board> findAll(Pageable pageable) {
+        return blogRepository.findAll(pageable);
+    }
+
+    public Page<Board> searchByKeyword(String keyword, Pageable pageable) {
+        return blogRepository.findByTitleContainingIgnoreCase(keyword, pageable);
+    } // LIKE 검색 제공(대소문자 무시)
 
     public void delete(Long id) {
         blogRepository.deleteById(id);

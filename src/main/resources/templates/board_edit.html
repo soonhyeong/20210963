@@ -8,11 +8,11 @@
 </head>
 <body>
     <div class="container">
-        <h1 class="mt-5">블로그 게시판</h1>
+        <h1 class="mt-5">블로그 게시판(new)</h1>
         <!--게시글추가폼-->
         <div class="mt-4">
             <h2>게시글을수정합니다.</h2>
-            <form th:action="@{/api/article_edit/{id}(id=${article.id})}" method="post" name="content">
+            <form th:action="@{/api/board_edit/{id}(id=${board_edit.id})}" method="post" name="content">
                 <input type="hidden" name="_method" value="put">
                 <div class="form-group">
                     <label for="title">제목:</label>
@@ -37,19 +37,25 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr th:each="article : ${articles}">
-                        <td th:text="${article.id}"></td>
-                        <td th:text="${article.title}"></td>
-                        <td th:text="${article.content}"></td>
-                    </tr>
+                    <tr th:each="board : ${boards}">
+                        <td th:text="${borad.id}"></td>
+                        <td>
+                            <a th:href="@{/board_view/{id}(id=${board.id})}">
+                                <span th:text="${borad.title}"></span>
+                            </a>
+                        </td>
+                        <td th:text="${board.user}"></td>
+                        <td th:text="${board.newdate}"></td>
+                        <td th:text="${board.count}"></td>
+                        <td th:text="${board.likec}"></td>
                 </tbody>
             </table>
         </div>
         <!-- 수정 버튼 -->
-        <a class="btn btn-warning" th:href="@{/article_edit/{id}(id=${article.id})}">수정</a>
+        <a class="btn btn-warning" th:href="@{/artice_edit/{id}(id=${board.id})}">수정</a>
 
         <!-- 삭제 버튼 -->
-        <a class="btn btn-warning" th:href="@{/article_edit/{id}(id=${article.id})}">삭제</a>
+        <a class="btn btn-warning" th:href="@{/board_edit/{id}(id=${board.id})}">삭제</a>
     </div>
 </body>
 </html>
