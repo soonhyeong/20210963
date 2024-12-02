@@ -25,6 +25,7 @@ import org.springframework.data.domain.PageRequest;
 
 import java.util.List;
 import java.util.Optional;
+import javax.servlet.http.HttpSession;
 
 
 @Controller
@@ -42,10 +43,17 @@ public class BlogController {
     // }
 
     @GetMapping("/board_list") // 새로운 게시판 링크 지정
-    public String board_list(Model model, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "") String keyword) {
+    public String board_list(Model model, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "") String keyword, HttpSession session) { // 세션 객체 전달
+        String userId = (String) session.getAttribute("userId"); // 세션 아이디 존재 확인
+        String email = (String) session.getAttribute("email"); // 세션에서 이메일 확인
         int pageSize = 3;
         PageRequest pageable = PageRequest.of(page, pageSize); // 한 페이지의 게시글 수
         Page<Board> list; // Page를 반환
+
+        if (userId == null) {
+            return "redirect:/member_login"; // 로그인 페이지로 리다이렉션
+        }
+        System.out.println("세션 userId: " + userId); // 서버 IDE 터미널에 세션 값 출력
 
         if (keyword.isEmpty()) {
             list = blogService.findAll(pageable); // 기본 전체 출력(키워드 x)
@@ -59,6 +67,8 @@ public class BlogController {
         model.addAttribute("totalPages", list.getTotalPages()); // 페이지 크기
         model.addAttribute("currentPage", page); // 페이지 번호
         model.addAttribute("keyword", keyword); // 키워드
+        model.addAttribute("startNum", startNum);
+        model.addAttribute("email", email); // 로그인 사용자(이메일)
         return "board_list"; // .HTML 연결
     }
 
@@ -134,15 +144,15 @@ public class BlogController {
     }
 
     @DeleteMapping("/api/board_edit/{id}")
-    public String deleteBoarde(@PathVariable Long id) {
+    public String deleteBoard(@PathVariable Long id) {
         blogService.delete(id);
         return "redirect:/board_list";
     }
     
-    @GetMapping("/favicon.ico")
-    public void favicon() {
-        // 아무 작업도 하지 않음
-    }
+    // @GetMapping("/favicon.ico")
+    // public void favicon() {
+    //     // 아무 작업도 하지 않음
+    // }
 
     @GetMapping("/board_write")
     public String board_wrtie() {
@@ -150,7 +160,14 @@ public class BlogController {
     }
 
     @PostMapping("/api/boards") // 글쓰기 게시판 저장
-    public String addboards(@ModelAttribute AddBoardRequest request) {
+    public String addboards(@ModelAttribute AddBoardRequest request, HttpSession session) {
+        String userId = (String) session.getAttribute("userId"); // 세션에서 사용자 ID를 가져오기
+        
+        if (userId == null) { // 로그인하지 않은 경우 로그인 페이지로 리다이렉트
+            return "redirect:/member_login";
+        }
+
+        request.setAuthor(userId); // 게시글 작성자 설정
         blogService.save(request);
         return "redirect:/board_list"; // .HTML 연결
     }
@@ -159,13 +176,13 @@ public class BlogController {
     @ExceptionHandler(NumberFormatException.class)
     public String handleNumberFormatException(NumberFormatException ex, Model model) {
         model.addAttribute("errorMessage", "잘못된 요청입니다. ID는 정수여야 합니다.");
-        return "board_error"; // 오류 페이지로 리다이렉트 (템플릿 이름)
+        return "article_error"; // 오류 페이지로 리다이렉트 (템플릿 이름)
     }
 
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler(NoHandlerFoundException.class)
     public String handleNoHandlerFoundException(NoHandlerFoundException ex, Model model) {
         model.addAttribute("errorMessage", "요청한 페이지를 찾을 수 없습니다.");
-        return "board_error"; // 오류 페이지로 리다이렉트
+        return "article_error"; // 오류 페이지로 리다이렉트
     }
 }

@@ -9,7 +9,7 @@ import com.example.demo.model.domain.Board;
 public class AddBoardRequest {
     private String title;
     private String content;
-    private String user;
+    private String author;
     private String newdate;
     private String count;
     private String likec;
@@ -18,7 +18,7 @@ public class AddBoardRequest {
         return Board.builder()
             .title(title)
             .content(content)
-            .user(user)
+            .user(author)
             .newdate(newdate)
             .count(count)
             .likec(likec)

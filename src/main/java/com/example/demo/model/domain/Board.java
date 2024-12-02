@@ -17,8 +17,8 @@ public class Board {
     private String title = "";
     @Column(name = "content", nullable = false)
     private String content = "";
-    @Column(name = "user", nullable = false)
-    private String user = "";
+    @Column(name = "author", nullable = false)
+    private String author = "";
     @Column(name = "newdate", nullable = false)
     private String newdate = "";
     @Column(name = "count", nullable = false)
@@ -31,7 +31,7 @@ public class Board {
     public Board(String title, String content, String user, String newdate, String count, String likec){
         this.title = title;
         this.content = content;
-        this.user = user;
+        this.author = author;
         this.newdate = newdate;
         this.count = count;
         this.likec = likec;
@@ -40,7 +40,7 @@ public class Board {
     public void update(String title, String content, String user, String newdate, String count, String likec) {
         this.title = title;
         this.content = content;
-        this.user = user;
+        this.author = author;
         this.newdate = newdate;
         this.count = count;
         this.likec = likec;
