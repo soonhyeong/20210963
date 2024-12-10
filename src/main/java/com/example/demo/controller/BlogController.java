@@ -4,10 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import com.example.demo.model.domain.Article;
+// import com.example.demo.model.domain.Article;
 import com.example.demo.model.domain.Board;
 import com.example.demo.model.service.BlogService;
-import com.example.demo.model.service.AddArticleRequest;
+// import com.example.demo.model.service.AddArticleRequest;
 import com.example.demo.model.service.AddBoardRequest;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 
-import java.util.List;
+// import java.util.List;
 import java.util.Optional;
 import javax.servlet.http.HttpSession;
 
@@ -53,7 +53,6 @@ public class BlogController {
         if (userId == null) {
             return "redirect:/member_login"; // 로그인 페이지로 리다이렉션
         }
-        System.out.println("세션 userId: " + userId); // 서버 IDE 터미널에 세션 값 출력
 
         if (keyword.isEmpty()) {
             list = blogService.findAll(pageable); // 기본 전체 출력(키워드 x)
@@ -167,7 +166,7 @@ public class BlogController {
             return "redirect:/member_login";
         }
 
-        request.setAuthor(userId); // 게시글 작성자 설정
+        request.setUser(userId); // 게시글 작성자 설정
         blogService.save(request);
         return "redirect:/board_list"; // .HTML 연결
     }

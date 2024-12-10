@@ -5,9 +5,9 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import com.example.demo.model.domain.Article;
+// import com.example.demo.model.domain.Article;
 import com.example.demo.model.domain.Board;
-import com.example.demo.model.repository.BlogRepository;
+// import com.example.demo.model.repository.BlogRepository;
 import com.example.demo.model.repository.BoardRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -65,7 +65,7 @@ public class BlogService {
     public void update(Long id, AddBoardRequest request) {
         Optional<Board> optionalBoard = blogRepository.findById(id); // 단일 글 조회
         optionalBoard.ifPresent(board -> { // 값이 같으면
-            board.update(request.getTitle(), request.getContent(), request.getAuthor(), request.getNewdate(), request.getCount(), request.getLikec()); // 값을 수정
+            board.update(request.getTitle(), request.getContent(), request.getUser(), request.getNewdate(), request.getCount(), request.getLikec()); // 값을 수정
             blogRepository.save(board); // Article 객체에 저장
         });
     }
