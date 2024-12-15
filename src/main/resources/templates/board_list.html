@@ -11,7 +11,7 @@
         <div class="d-flex justify-content-between align-items-center mt-4 p-3 border rounded bg-light">
             <h1 class="m-0">블로그 게시판(new)</h1>
             <div class="text-right">
-                <span class="font-weight-bold text-primary" th:text="${email} + '님 환영합니다.'"></span>
+                <!-- <span class="font-weight-bold text-primary" th:text="${email} + '님 환영합니다.'"></span> -->
                 <a class="btn btn-sm btn-outline-danger ml-3" th:href="@{/api/logout}">로그아웃</a>
             </div>
         </div>
@@ -38,17 +38,17 @@
                 </thead>
                 <tbody>
                     <tr th:each="board : ${boards}">
-                        <td th:text="${borad.id}"></td>
+                        <td th:text="${board.id}"></td>
                         <td>
                             <a th:href="@{/board_view/{id}(id=${board.id})}">
-                                <span th:text="${borad.title}"></span>
+                                <span th:text="${board.title}"></span>
                             </a>
                         </td>
-                        <td th:text="${boar.user}"></td>
+                        <td th:text="${board.user}"></td>
                         <td th:text="${board.newdate}"></td>
                         <td th:text="${board.count}"></td>
                         <td th:text="${board.likec}"></td>
-                    </tr>
+                    </tr>                    
                 </tbody>
             </table>
         <!-- 글쓰기 페이지 -->
